@@ -13,7 +13,15 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ background: "linear-gradient(to right, #ec4899, #9333ea)", boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)" }}>
+    <AppBar 
+      position="fixed" 
+      sx={{ 
+        background: "linear-gradient(to right, #ec4899, #9333ea)", 
+        boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
+        width: "100%",
+        zIndex: 1100
+      }}
+    >
       <Toolbar>
         {/* Mobile Menu Icon */}
         <IconButton edge="start" color="inherit" onClick={handleMenuOpen} sx={{ display: { xs: "block", md: "none" } }}>
