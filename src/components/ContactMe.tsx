@@ -6,7 +6,7 @@ const ContactMe: React.FC = () => {
   return (
     <Box
       sx={{
-        background: "linear-gradient(to right, #ec4899, #9333ea)",
+        background: "linear-gradient(to left, #ec4899, #9333ea)",
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",

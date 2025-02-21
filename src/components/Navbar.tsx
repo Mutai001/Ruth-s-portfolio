@@ -42,7 +42,7 @@ const Navbar: React.FC = () => {
 
         {/* Desktop Menu with Hover Effects */}
         <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3 }}>
-          {["Homepage", "Portfolio", "About", "Certifications", "Contact me"].map((item) => (
+          {["Portfolio", "About", "Certifications", "Contact me"].map((item) => (
             <Typography
               key={item}
               variant="body1"
