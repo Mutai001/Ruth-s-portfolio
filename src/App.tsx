@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar"; // Import the Navbar component
 import Portfolio from "./components/Portfolio";
 import Certifications from "./components/Certifications";
 import ContactMe from "./components/ContactMe";
+import Footer from "./components/Footer";
 
 const App: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const App: React.FC = () => {
       <Portfolio />
       <Certifications />
       <ContactMe />
+      <Footer />
     </div>
   );
 };
