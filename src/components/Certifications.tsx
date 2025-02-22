@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography, Card, CardContent, Container } from "@mui/material";
 import { motion } from "framer-motion";
-
+//certificates 
 const certifications = [
   { title: "Digital Marketing Expert", provider: "Google", year: "2023" },
   { title: "Social Media Strategy", provider: "HubSpot Academy", year: "2022" },
