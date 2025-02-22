@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Box, Button } from "@mui/material";
 import { motion } from "framer-motion";
-
+//main
 const HomePage: React.FC = () => {
   return (
     <Box
