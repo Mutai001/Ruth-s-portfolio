@@ -116,7 +116,7 @@ export default function HeroSection() {
       
       {/* Debug element - Absolute positioned text that will be visible regardless of other styles */}
       <div className="absolute top-4 left-4 bg-black text-white p-2 rounded z-50">
-        Debug: If you can see this text in white and the background in black, colors are working
+        {/* Debug: If you can see this text in white and the background in black, colors are working */}
       </div>
     </div>
   );
