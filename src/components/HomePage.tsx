@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function HeroSection() {
-  const [isHovered, setIsHovered] = useState(false);
+  const [, setIsHovered] = useState(false);
   
   return (
     <div className="w-full min-h-screen bg-gradient-to-br from-blue-500 to-purple-700 flex flex-col items-center justify-center px-4 py-16">
