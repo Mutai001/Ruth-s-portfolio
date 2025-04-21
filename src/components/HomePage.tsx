@@ -1,20 +1,20 @@
 import { useState } from "react";
 
 export default function HeroSection() {
-  const [, setIsHovered] = useState(false);
+  // State for tracking button hover state that's actually used in the UI
+  const [portfolioButtonHovered, setPortfolioButtonHovered] = useState(false);
   
   return (
-    <div className="w-full min-h-screen bg-red-500 flex flex-col items-center justify-center px-4 py-16">
-      {/* Changed from gradient to solid red color for testing */}
+    <div className="relative w-full min-h-screen bg-red-500 flex flex-col items-center justify-center px-4 py-16">
+      {/* Main container with explicit z-index */}
       
-      <div className="max-w-4xl w-full bg-blue-500 rounded-2xl p-8 md:p-12 shadow-2xl">
-        {/* Changed from semi-transparent to solid blue */}
+      <div className="relative z-10 max-w-4xl w-full bg-blue-500 rounded-2xl p-8 md:p-12 shadow-2xl">
+        {/* Increased z-index to ensure visibility */}
         
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
           {/* Profile Image */}
           <div className="relative group">
             <div className="absolute -inset-1 bg-green-500 rounded-full opacity-75 group-hover:opacity-100 blur transition duration-500"></div>
-            {/* Changed from gradient to solid green */}
             
             <div className="relative rounded-full overflow-hidden h-40 w-40">
               <img
@@ -28,33 +28,28 @@ export default function HeroSection() {
           {/* Hero Content */}
           <div className="flex-1 text-center md:text-left">
             <h1 className="text-4xl md:text-5xl font-extrabold text-yellow-400 mb-4">
-              {/* Changed text color to solid yellow */}
               <span className="block">Hello, I'm</span>
               <span className="text-purple-400">
-                {/* Changed from gradient text to solid purple */}
                 Ruth Kimeli
               </span>
             </h1>
             
             <p className="text-lg text-orange-400 mb-6">
-              {/* Changed from semi-transparent white to solid orange */}
               Social Media Manager crafting engaging digital stories and building meaningful online communities.
               Turning followers into fans and clicks into customers.
             </p>
             
             <div className="flex flex-wrap gap-3 justify-center md:justify-start">
               <button 
-                className="px-6 py-3 bg-pink-500 hover:bg-pink-400 text-white font-bold rounded-lg transition-all duration-300 transform hover:-translate-y-1 shadow-lg"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                className={`px-6 py-3 bg-pink-500 hover:bg-pink-400 text-white font-bold rounded-lg transition-all duration-300 transform ${portfolioButtonHovered ? "-translate-y-1 shadow-xl" : "shadow-lg"}`}
+                onMouseEnter={() => setPortfolioButtonHovered(true)}
+                onMouseLeave={() => setPortfolioButtonHovered(false)}
               >
-                {/* Changed from purple to pink */}
                 View My Portfolio
               </button>
               
               <a 
                 href="#" 
-                download
                 className="px-6 py-3 bg-transparent border-2 border-white text-white font-bold rounded-lg transition-all duration-300 flex items-center gap-2 shadow-lg hover:-translate-y-1"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -73,13 +68,11 @@ export default function HeroSection() {
           <span className="px-3 py-1 bg-green-800 text-white rounded-full text-sm">Analytics</span>
           <span className="px-3 py-1 bg-yellow-800 text-white rounded-full text-sm">Paid Campaigns</span>
           <span className="px-3 py-1 bg-purple-800 text-white rounded-full text-sm">Brand Development</span>
-          {/* Changed all badge backgrounds to solid colors */}
         </div>
         
         {/* Social Links */}
         <div className="mt-8 flex justify-center md:justify-start gap-4">
           <a href="#" className="text-yellow-300 hover:text-blue-300 transition-colors">
-            {/* Changed icon color */}
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/>
             </svg>
@@ -108,15 +101,15 @@ export default function HeroSection() {
       </div>
       
       {/* Animation elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-green-500 blur-3xl"></div>
-        <div className="absolute bottom-1/3 right-1/3 w-96 h-96 rounded-full bg-purple-500 blur-3xl"></div>
-        {/* Changed from semi-transparent to solid colors */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-green-500 blur-3xl opacity-50"></div>
+        <div className="absolute bottom-1/3 right-1/3 w-96 h-96 rounded-full bg-purple-500 blur-3xl opacity-50"></div>
+        {/* Added opacity to make them visible but not overwhelming */}
       </div>
       
-      {/* Debug element - Absolute positioned text that will be visible regardless of other styles */}
+      {/* Debug element with higher z-index */}
       <div className="absolute top-4 left-4 bg-black text-white p-2 rounded z-50">
-        {/* Debug: If you can see this text in white and the background in black, colors are working */}
+        Debug: If you can see this text in white and the background in black, colors are working
       </div>
     </div>
   );
