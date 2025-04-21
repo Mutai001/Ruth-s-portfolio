@@ -1,4 +1,5 @@
 import { useState } from "react";
+import anime from '../images/anime heros (1).jpg'
 
 export default function HeroSection() {
   // State for tracking button hover state that's actually used in the UI
@@ -18,7 +19,7 @@ export default function HeroSection() {
             
             <div className="relative rounded-full overflow-hidden h-40 w-40">
               <img
-                src="/api/placeholder/400/400"
+                src={anime}
                 alt="Ruth Kimeli"
                 className="w-full h-full object-cover"
               />
