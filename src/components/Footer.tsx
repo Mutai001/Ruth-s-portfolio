@@ -1,4 +1,3 @@
-//Footer portfolio
 import React from "react";
 import { Box, Typography, IconButton, Container } from "@mui/material";
 import { motion } from "framer-motion";
