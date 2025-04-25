@@ -1,4 +1,3 @@
-// Portfolio component 
 import React from "react";
 import { Box, Typography, Button, Grid, Card, CardMedia, CardContent } from "@mui/material";
 import { motion } from "framer-motion";
