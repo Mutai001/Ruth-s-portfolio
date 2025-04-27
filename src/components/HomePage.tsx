@@ -1,16 +1,13 @@
-//heros
 import { 
   Box,
   Typography,
   Button,
   Chip,
-  Avatar,
   Stack,
   IconButton,
   Link,
   useMediaQuery,
-  ThemeProvider,
-  createTheme
+  useTheme
 } from "@mui/material";
 import { styled } from "@mui/system";
 import DownloadIcon from "@mui/icons-material/Download";
@@ -20,61 +17,42 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import PersonIcon from "@mui/icons-material/Person";
-import React from "react";
-
-// Create a theme
-const theme = createTheme();
+import heroImage  from "../images/anime heros (1).jpg"
 
 // Styled components
-const GradientBackground = styled(Box)(({ theme }) => ({
-  minHeight: "100vh",
-  width: "100%",
-  background: "linear-gradient(135deg, #121212 0%, #2d1b4c 100%)",
-  position: "relative",
-  overflow: "hidden",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  padding: theme.spacing(2),
-  [theme.breakpoints.up("md")]: {
-    padding: theme.spacing(4)
-  }
-}));
-
-const ProfileImage = styled(Box)(({ theme }) => ({
+const ProfileImageContainer = styled(Box)(({ theme }) => ({
   borderRadius: "50%",
   overflow: "hidden",
-  width: 160,
-  height: 160,
+  width: 200,
+  height: 200,
   position: "relative",
   boxShadow: "0 0 30px #673ab7",
   transition: "transform 0.3s ease, box-shadow 0.3s ease",
+  margin: "0 auto",
   "&:hover": {
     transform: "scale(1.05)",
     boxShadow: "0 0 40px #ff4081"
   },
+  [theme.breakpoints.down("md")]: {
+    width: 180,
+    height: 180
+  },
   [theme.breakpoints.down("sm")]: {
-    width: 120,
-    height: 120
+    width: 150,
+    height: 150
   }
 }));
 
-const ContentSection = styled(Box)(({ theme }) => ({
-  background: "rgba(30, 30, 30, 0.7)",
-  backdropFilter: "blur(12px)",
-  borderRadius: theme.spacing(3),
-  padding: theme.spacing(5),
-  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05) inset",
-  position: "relative",
-  zIndex: 10,
-  border: "1px solid rgba(255, 255, 255, 0.08)",
+const StyledImage = styled('img')({
   width: "100%",
-  maxWidth: "1200px",
-  margin: "0 auto",
-  [theme.breakpoints.down("sm")]: {
-    padding: theme.spacing(3)
+  height: "100%",
+  objectFit: "cover",
+  objectPosition: "center",
+  transition: "transform 0.5s ease",
+  "&:hover": {
+    transform: "scale(1.1)"
   }
-}));
+});
 
 const StyledChip = styled(Chip)({
   fontWeight: 600,
@@ -111,32 +89,9 @@ const AnimatedButton = styled(Button)(({ theme }) => ({
   }
 }));
 
-interface BackgroundCircleProps {
-  size: string;
-  color: string;
-  top?: string;
-  left?: string;
-  right?: string;
-  bottom?: string;
-}
-
-const BackgroundCircle = styled(Box)<BackgroundCircleProps>(({ size, color, top, left, right, bottom }) => ({
-  position: "absolute",
-  width: size,
-  height: size,
-  borderRadius: "50%",
-  background: color,
-  filter: "blur(60px)",
-  top,
-  left,
-  right,
-  bottom,
-  zIndex: 1,
-  animation: "float 15s infinite ease-in-out"
-}));
-
 // Main component
-function HeroSectionContent() {
+function HeroSection() {
+  const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
   
   // Email handling function
@@ -144,47 +99,109 @@ function HeroSectionContent() {
     window.location.href = "mailto:your-email@example.com?subject=Job%20Opportunity&body=Hi%20Ruth,%20I'm%20interested%20in%20hiring%20you%20for%20a%20project.";
   };
 
-  // Animation backgrounds
-  const backgroundCircles = [
-    { size: "250px", color: "rgba(103, 58, 183, 0.2)", top: "20%", left: "10%" },
-    { size: "400px", color: "rgba(255, 64, 129, 0.15)", bottom: "20%", right: "15%" },
-    { size: "200px", color: "rgba(33, 150, 243, 0.15)", top: "70%", left: "25%" },
-    { size: "350px", color: "rgba(255, 193, 7, 0.1)", top: "10%", right: "25%" }
-  ];
-
   return (
-    <GradientBackground>
-      {/* Animated background elements */}
-      {backgroundCircles.map((circle, index) => (
-        <BackgroundCircle
-          key={index}
-          size={circle.size}
-          color={circle.color}
-          top={circle.top}
-          left={circle.left}
-          right={circle.right}
-          bottom={circle.bottom}
-          sx={{
-            animation: `float${index} 20s infinite ease-in-out`
-          }}
-        />
-      ))}
+    <Box
+      sx={{
+        minHeight: "100vh",
+        width: "100%",
+        background: "linear-gradient(135deg, #121212 0%, #2d1b4c 100%)",
+        position: "relative",
+        overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: { xs: 2, sm: 4 }
+      }}
+    >
+      {/* Background circles - creating the animated gradient effect */}
+      <Box
+        sx={{
+          position: "absolute",
+          width: "250px",
+          height: "250px",
+          borderRadius: "50%",
+          background: "rgba(103, 58, 183, 0.2)",
+          filter: "blur(60px)",
+          top: "20%",
+          left: "10%",
+          zIndex: 1,
+          animation: "float1 20s infinite ease-in-out"
+        }}
+      />
+      <Box
+        sx={{
+          position: "absolute",
+          width: "400px",
+          height: "400px",
+          borderRadius: "50%",
+          background: "rgba(255, 64, 129, 0.15)",
+          filter: "blur(60px)",
+          bottom: "20%",
+          right: "15%",
+          zIndex: 1,
+          animation: "float2 20s infinite ease-in-out"
+        }}
+      />
+      <Box
+        sx={{
+          position: "absolute",
+          width: "200px",
+          height: "200px",
+          borderRadius: "50%",
+          background: "rgba(33, 150, 243, 0.15)",
+          filter: "blur(60px)",
+          top: "70%",
+          left: "25%",
+          zIndex: 1,
+          animation: "float3 20s infinite ease-in-out"
+        }}
+      />
+      <Box
+        sx={{
+          position: "absolute",
+          width: "350px",
+          height: "350px",
+          borderRadius: "50%",
+          background: "rgba(255, 193, 7, 0.1)",
+          filter: "blur(60px)",
+          top: "10%",
+          right: "25%",
+          zIndex: 1,
+          animation: "float4 20s infinite ease-in-out"
+        }}
+      />
 
-      <ContentSection>
+      {/* Main content */}
+      <Box
+        sx={{
+          width: "100%",
+          maxWidth: "1200px",
+          background: "rgba(30, 30, 30, 0.7)",
+          backdropFilter: "blur(12px)",
+          borderRadius: 3,
+          p: { xs: 3, sm: 4, md: 5 },
+          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05) inset",
+          position: "relative",
+          zIndex: 10,
+          border: "1px solid rgba(255, 255, 255, 0.08)"
+        }}
+      >
         <Stack 
           direction={{ xs: "column", md: "row" }} 
-          spacing={{ xs: 3, md: 6 }}
+          spacing={{ xs: 4, md: 6 }}
           alignItems="center"
-          justifyContent="space-between"
         >
-          {/* Profile image column */}
-          <Box sx={{ 
-            display: "flex", 
-            flexDirection: "column",
-            alignItems: { xs: "center", md: "center" },
-            width: { xs: "100%", md: "auto" }
-          }}>
-            <ProfileImage>
+          {/* Profile image */}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              width: { xs: "100%", md: "auto" }
+            }}
+          >
+            <ProfileImageContainer>
+              {/* Overlay effect */}
               <Box
                 sx={{
                   position: "absolute",
@@ -196,17 +213,13 @@ function HeroSectionContent() {
                   zIndex: 1
                 }}
               />
-              <Avatar
+              <StyledImage
                 alt="Ruth Kimeli"
-                src="/api/placeholder/160/160"
-                sx={{ 
-                  width: "100%", 
-                  height: "100%"
-                }}
+                src={heroImage}
               />
-            </ProfileImage>
+            </ProfileImageContainer>
             
-            {/* Social Links - Show below image on small screens */}
+            {/* Social Links - Mobile */}
             <Stack 
               direction="row" 
               spacing={1} 
@@ -221,14 +234,14 @@ function HeroSectionContent() {
                 { icon: <LinkedInIcon />, label: "LinkedIn" },
                 { icon: <TwitterIcon />, label: "Twitter" }
               ].map((social, index) => (
-                <SocialIconButton key={index} size="large" aria-label={social.label}>
+                <SocialIconButton key={index} size="medium" aria-label={social.label}>
                   {social.icon}
                 </SocialIconButton>
               ))}
             </Stack>
           </Box>
 
-          {/* Content column */}
+          {/* Content */}
           <Stack 
             spacing={3} 
             sx={{ 
@@ -237,7 +250,11 @@ function HeroSectionContent() {
             }}
           >
             <Box>
-              <Typography variant="h6" color="#b39ddb">
+              <Typography 
+                variant="h6" 
+                color="#b39ddb"
+                sx={{ mb: 1 }}
+              >
                 Hello, I'm
               </Typography>
               <Typography 
@@ -247,7 +264,7 @@ function HeroSectionContent() {
                   background: "linear-gradient(90deg, #9c27b0 0%, #f50057 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
-                  fontSize: { xs: "2.5rem", sm: "3rem", md: "3.5rem" }
+                  fontSize: { xs: "2.2rem", sm: "2.8rem", md: "3.2rem" }
                 }}
               >
                 Ruth Kimeli
@@ -259,7 +276,8 @@ function HeroSectionContent() {
               color="#e0e0e0" 
               sx={{ 
                 fontSize: { xs: "1rem", md: "1.1rem" },
-                maxWidth: "600px"
+                maxWidth: "600px",
+                mx: { xs: "auto", md: 0 }
               }}
             >
               Social Media Manager crafting engaging digital stories and building 
@@ -302,7 +320,7 @@ function HeroSectionContent() {
                 variant="subtitle1" 
                 color="#e0e0e0" 
                 sx={{ 
-                  mt: { xs: 2, md: 4 }, 
+                  mt: { xs: 2, md: 3 }, 
                   mb: 2, 
                   textAlign: { xs: "center", md: "left" } 
                 }}
@@ -317,13 +335,15 @@ function HeroSectionContent() {
                   mx: -0.5
                 }}
               >
-                {[
-                  { label: "Content Strategy", color: "error" as const },
-                  { label: "Community Management", color: "primary" as const },
-                  { label: "Analytics", color: "success" as const },
-                  { label: "Paid Campaigns", color: "warning" as const },
-                  { label: "Brand Development", color: "secondary" as const }
-                ].map((expertise) => (
+                {(
+                  [
+                    { label: "Content Strategy", color: "error" as const },
+                    { label: "Community Management", color: "primary" as const },
+                    { label: "Analytics", color: "success" as const },
+                    { label: "Paid Campaigns", color: "warning" as const },
+                    { label: "Brand Development", color: "secondary" as const }
+                  ] as const
+                ).map((expertise) => (
                   <StyledChip 
                     key={expertise.label}
                     label={expertise.label}
@@ -334,7 +354,7 @@ function HeroSectionContent() {
               </Box>
             </Box>
 
-            {/* Social Links - Show beside content on medium/large screens */}
+            {/* Social Links - Desktop */}
             <Stack 
               direction="row" 
               spacing={1} 
@@ -358,16 +378,9 @@ function HeroSectionContent() {
             </Stack>
           </Stack>
         </Stack>
-      </ContentSection>
-    </GradientBackground>
+      </Box>
+    </Box>
   );
 }
 
-// Export the component wrapped with ThemeProvider
-export default function HeroSection() {
-  return (
-    <ThemeProvider theme={theme}>
-      <HeroSectionContent />
-    </ThemeProvider>
-  );
-}
+export default HeroSection;
