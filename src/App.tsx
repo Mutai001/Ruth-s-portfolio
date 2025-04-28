@@ -1,5 +1,6 @@
 import React from "react";
-import Navbar from "./components/Navbar"; // Import the Navbar component
+import { Element } from "react-scroll";
+import Navbar from "./components/Navbar";
 import HomePage from "./components/HomePage";
 import Portfolio from "./components/Portfolio";
 import TestimonialsSection from "./components/Testimonials";
@@ -11,11 +12,27 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
-     <HomePage />
-      <Portfolio />
-      <WorkHighlightsSection />
-      <TestimonialsSection/>
-      <ContactMe />
+      
+      <Element name="home">
+        <HomePage />
+      </Element>
+      
+      <Element name="about">
+        <Portfolio />
+      </Element>
+      
+      <Element name="work">
+        <WorkHighlightsSection />
+      </Element>
+      
+      <Element name="testimonials">
+        <TestimonialsSection />
+      </Element>
+      
+      <Element name="contact">
+        <ContactMe />
+      </Element>
+      
       <Footer />
     </div>
   );
