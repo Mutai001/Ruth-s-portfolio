@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { Typography, Container, Box, Grid, useMediaQuery, useTheme, Divider, Avatar } from '@mui/material';
 import { useInView } from 'react-intersection-observer';
+import AboutMeImage from '../images/heros (2).jpg'; // Replace with your image path
 
 export default function Portfolio() {
   const theme = useTheme();
@@ -229,7 +230,7 @@ export default function Portfolio() {
                     }}
                   >
                     <Avatar
-                      src="/api/placeholder/300/300"
+                      src={AboutMeImage} // Replace with your image path
                       alt="Ruth Kimeli"
                       sx={{
                         width: { xs: 200, md: 300 },
