@@ -8,6 +8,7 @@ import ContactMe from "./components/ContactMe";
 import Footer from "./components/Footer";
 import WorkHighlightsSection from "./components/Work";
 import Skills from "./components/Skills";
+import Education from "./components/Education";
 
 const App: React.FC = () => {
   return (
@@ -21,10 +22,15 @@ const App: React.FC = () => {
       <Element name="about">
         <Portfolio />
       </Element>
+
+      <Element name="education">
+        <Education />
+      </Element>
       
       <Element name="skills">
         <Skills />
       </Element>
+
       <Element name="work">
         <WorkHighlightsSection />
       </Element>
