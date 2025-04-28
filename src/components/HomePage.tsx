@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Button, Typography, Container, Box, Grid, useMediaQuery, useTheme } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 import WorkIcon from '@mui/icons-material/Work';
+import HomePageImage from '../images/anime heros (1).jpg'; // Replace with your image path
 
 export default function HeroSection() {
   const theme = useTheme();
@@ -278,7 +279,7 @@ export default function HeroSection() {
                 }}
               >
                 <img 
-                  src="/api/placeholder/400/400" 
+                  src={HomePageImage} 
                   alt="Ruth Kimeli" 
                   style={{
                     width: '100%',
