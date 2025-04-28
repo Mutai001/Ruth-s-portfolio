@@ -42,9 +42,11 @@ export default function Navbar() {
     };
   }, [scrolled]);
 
-  // Navigation items
+  // Navigation items - Added Skills and Education
   const navItems = [
     { title: 'About Me', id: 'about' },
+    { title: 'Skills', id: 'skills' },
+    { title: 'Education', id: 'education' },
     { title: 'Selected Work', id: 'work' },
     { title: 'Testimonials', id: 'testimonials' },
     { title: 'Contact', id: 'contact' }
@@ -143,6 +145,12 @@ export default function Navbar() {
     </motion.div>
   );
 
+  // Email handler function
+  const handleEmailClick = (e) => {
+    e.preventDefault();
+    window.location.href = 'mailto:Kimeliruthj@gmail.com';
+  };
+
   // Header component
   return (
     <AppBar 
@@ -222,26 +230,21 @@ export default function Navbar() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Link
-                  to="contact"
-                  {...scrollSettings}
-                  style={{ textDecoration: 'none' }}
+                <Button 
+                  variant="contained" 
+                  startIcon={<EmailIcon />}
+                  onClick={handleEmailClick}
+                  sx={{ 
+                    ml: 3,
+                    background: 'linear-gradient(45deg, #673ab7 30%, #9c27b0 90%)',
+                    color: 'white',
+                    fontWeight: 600,
+                    borderRadius: 2,
+                    textTransform: 'none'
+                  }}
                 >
-                  <Button 
-                    variant="contained" 
-                    startIcon={<EmailIcon />}
-                    sx={{ 
-                      ml: 3,
-                      background: 'linear-gradient(45deg, #673ab7 30%, #9c27b0 90%)',
-                      color: 'white',
-                      fontWeight: 600,
-                      borderRadius: 2,
-                      textTransform: 'none'
-                    }}
-                  >
-                    Get in Touch
-                  </Button>
-                </Link>
+                  Get in Touch
+                </Button>
               </motion.div>
             </Box>
           )}
@@ -367,28 +370,22 @@ export default function Navbar() {
         </List>
         
         <Box sx={{ mt: 4, textAlign: 'center' }}>
-          <Link
-            to="contact"
-            {...scrollSettings}
-            style={{ textDecoration: 'none', width: '100%' }}
-            onClick={handleDrawerToggle}
+          <Button 
+            variant="contained" 
+            fullWidth
+            startIcon={<EmailIcon />}
+            onClick={handleEmailClick}
+            sx={{ 
+              background: 'linear-gradient(45deg, #673ab7 30%, #9c27b0 90%)',
+              color: 'white',
+              fontWeight: 600,
+              borderRadius: 2,
+              py: 1.2,
+              textTransform: 'none'
+            }}
           >
-            <Button 
-              variant="contained" 
-              fullWidth
-              startIcon={<EmailIcon />}
-              sx={{ 
-                background: 'linear-gradient(45deg, #673ab7 30%, #9c27b0 90%)',
-                color: 'white',
-                fontWeight: 600,
-                borderRadius: 2,
-                py: 1.2,
-                textTransform: 'none'
-              }}
-            >
-              Get in Touch
-            </Button>
-          </Link>
+            Get in Touch
+          </Button>
         </Box>
       </Drawer>
     </AppBar>

@@ -1,15 +1,18 @@
 import { useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import { Typography, Container, Box, Grid, Card, CardMedia, CardContent, useMediaQuery, useTheme, Divider } from '@mui/material';
+import { Typography, Container, Box, Grid, Card, CardContent, useMediaQuery, useTheme, Divider, Chip } from '@mui/material';
 import { useInView } from 'react-intersection-observer';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import PeopleIcon from '@mui/icons-material/People';
-import project1 from '../assets/brandgrowth.jpg';
-import project2 from '../assets/content marketing.jpg';
-import project3 from '../assets/heros iamge.jpg';   
-import project4 from '../assets/social meadia.jpg';
+import CampaignIcon from '@mui/icons-material/Campaign';
+import MovieIcon from '@mui/icons-material/Movie';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ShareIcon from '@mui/icons-material/Share';
+
+// You would need to replace these with actual images
+import celsirImage from '../assets/brandgrowth.jpg';
+import osonaImage from '../assets/content marketing.jpg';
+import calvaryImage from '../assets/social meadia.jpg';
 
 export default function WorkHighlightsSection() {
   const theme = useTheme();
@@ -50,35 +53,64 @@ export default function WorkHighlightsSection() {
     }
   };
 
-  // Sample projects data
-  const projects = [
+  // Updated work experience data
+  const experiences = [
     {
       id: 1,
-      image: project1,
-      result: "Increased engagement by 45% for Luxe Beauty within 3 months",
-      icon: <TrendingUpIcon sx={{ color: '#f50057' }} />,
-      color: "rgba(245, 0, 87, 0.8)"
+      company: "CELSIR Africa",
+      location: "Eldoret, Kenya",
+      period: "Nov 2024 – Feb 2025",
+      position: "Social Media Manager",
+      image: celsirImage,
+      achievements: [
+        "Increased social media engagement through structured content strategy & storytelling techniques",
+        "Boosted platform growth across Instagram, X, and LinkedIn with visually appealing content",
+        "Produced high-impact videos highlighting success stories and advocacy efforts",
+        "Developed compelling content strategy aligned with CELSIR's mission",
+        "Launched employee & beneficiary spotlight features enhancing brand credibility",
+        "Facilitated prison visits supporting rehabilitation efforts"
+      ],
+      primaryIcon: <CampaignIcon sx={{ color: '#f50057' }} />,
+      secondaryIcon: <ShareIcon sx={{ color: '#f50057' }} />,
+      color: "rgba(245, 0, 87, 0.8)",
+      tags: ["Social Media", "Content Strategy", "Legal Aid"]
     },
     {
       id: 2,
-      image: project2,
-      result: "Created a viral post that reached 1.2M users organically",
-      icon: <VisibilityIcon sx={{ color: '#673ab7' }} />,
-      color: "rgba(103, 58, 183, 0.8)"
+      company: "Osona Yarns",
+      location: "Nairobi",
+      period: "Jan 2024 – May 2024",
+      position: "Digital Marketer",
+      image: osonaImage,
+      achievements: [
+        "Created engaging content across Facebook, Instagram, WhatsApp, and TikTok",
+        "Boosted engagement within two months through Reels and targeted campaigns",
+        "Strengthened community engagement by encouraging user-generated content",
+        "Leveraged analytics to optimize content strategy and drive higher conversions",
+        "Managed multiple content streams ensuring timely and consistent delivery"
+      ],
+      primaryIcon: <VisibilityIcon sx={{ color: '#673ab7' }} />,
+      secondaryIcon: <ThumbUpIcon sx={{ color: '#673ab7' }} />,
+      color: "rgba(103, 58, 183, 0.8)",
+      tags: ["Digital Marketing", "Content Creation", "Analytics"]
     },
     {
       id: 3,
-      image: project3,
-      result: "Generated 15K+ new followers for TechStart through targeted campaigns",
-      icon: <PeopleIcon sx={{ color: '#2196f3' }} />,
-      color: "rgba(33, 150, 243, 0.8)"
-    },
-    {
-      id: 4,
-      image: project4,
-      result: "Achieved 300% higher engagement rate than industry average for FitLife",
-      icon: <FavoriteIcon sx={{ color: '#ff4081' }} />,
-      color: "rgba(255, 64, 129, 0.8)"
+      company: "Calvary Chapel",
+      location: "Eldoret, Kenya",
+      period: "Oct 2021 – Dec 2023",
+      position: "TikTok Content Creator",
+      image: calvaryImage,
+      achievements: [
+        "Increased TikTok and Instagram Reels followers through strategic content planning",
+        "Produced engaging short-form videos communicating the church's message effectively",
+        "Boosted content visibility using trending audio and storytelling techniques",
+        "Strengthened digital influence with consistent, impactful content curation"
+      ],
+      primaryIcon: <MovieIcon sx={{ color: '#2196f3' }} />,
+      secondaryIcon: <PeopleIcon sx={{ color: '#2196f3' }} />,
+      color: "rgba(33, 150, 243, 0.8)",
+      tags: ["TikTok", "Short-form Video", "Community Building"]
     }
   ];
 
@@ -157,7 +189,7 @@ export default function WorkHighlightsSection() {
                   textAlign: 'center'
                 }}
               >
-                Selected Work Highlights
+                Professional Experience
               </Typography>
               <Divider sx={{ 
                 flexGrow: 0.95, 
@@ -169,10 +201,10 @@ export default function WorkHighlightsSection() {
             </Box>
           </motion.div>
 
-          {/* Work Grid */}
+          {/* Experience Cards */}
           <Grid container spacing={4}>
-            {projects.map((project, index) => (
-              <Grid item xs={12} sm={6} md={6} key={project.id}>
+            {experiences.map((experience, index) => (
+              <Grid item xs={12} md={12} key={experience.id}>
                 <motion.div
                   variants={itemVariants}
                   custom={index}
@@ -192,68 +224,202 @@ export default function WorkHighlightsSection() {
                       boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
                       transition: 'all 0.3s ease-in-out',
                       '&:hover': {
-                        boxShadow: `0 15px 40px rgba(${index % 2 === 0 ? '245, 0, 87' : '103, 58, 183'}, 0.2)`,
+                        boxShadow: `0 15px 40px ${experience.color.replace('0.8', '0.2')}`,
                       }
                     }}
                   >
-                    {/* Project Image with Overlay */}
-                    <Box sx={{ position: 'relative' }}>
-                      <CardMedia
-                        component="img"
-                        height="230"
-                        image={project.image}
-                        alt={`Project ${project.id}`}
-                        sx={{ 
-                          objectFit: 'cover'
-                        }}
-                      />
-                      
-                      {/* Animated overlay on hover */}
-                      <Box
-                        sx={{
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                          width: '100%',
+                    <Grid container>
+                      {/* Company Image (Left Side) */}
+                      <Grid item xs={12} md={4} sx={{ position: 'relative' }}>
+                        <Box sx={{ 
+                          background: `linear-gradient(135deg, ${experience.color}, rgba(18, 18, 18, 0.9))`,
                           height: '100%',
-                          background: `linear-gradient(to top, ${project.color}, transparent)`,
-                          opacity: 0.7,
-                          transition: 'all 0.3s ease'
-                        }}
-                      />
-                    </Box>
-                    
-                    {/* Result Text */}
-                    <CardContent sx={{ p: 3 }}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                        <Box 
-                          sx={{ 
-                            display: 'flex',
+                          minHeight: { xs: '200px', md: '100%' },
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          p: 4,
+                          position: 'relative',
+                          overflow: 'hidden'
+                        }}>
+                          {/* Animated Background Element */}
+                          <Box sx={{
+                            position: 'absolute',
+                            width: '150%',
+                            height: '150%',
+                            background: `radial-gradient(circle, ${experience.color.replace('0.8', '0.2')}, transparent)`,
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            opacity: 0.3,
+                            zIndex: 0
+                          }} />
+
+                          <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={inView ? { 
+                              scale: 1, 
+                              opacity: 1,
+                              transition: { 
+                                delay: 0.2 + index * 0.1,
+                                duration: 0.8,
+                                ease: "easeOut"
+                              }
+                            } : { scale: 0.9, opacity: 0 }}
+                            style={{ zIndex: 1 }}
+                          >
+                            <Box sx={{ 
+                              width: '80px', 
+                              height: '80px', 
+                              borderRadius: '50%',
+                              background: 'rgba(18, 18, 18, 0.7)',
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              boxShadow: '0 8px 20px rgba(0, 0, 0, 0.3)',
+                              mb: 3
+                            }}>
+                              {experience.primaryIcon}
+                            </Box>
+                          </motion.div>
+
+                          <Typography 
+                            variant="h5" 
+                            component="h3" 
+                            sx={{ 
+                              color: '#ffffff',
+                              fontWeight: 700,
+                              textAlign: 'center',
+                              mb: 1,
+                              zIndex: 1
+                            }}
+                          >
+                            {experience.company}
+                          </Typography>
+                          
+                          <Typography 
+                            variant="body2" 
+                            sx={{ 
+                              color: 'rgba(255, 255, 255, 0.8)',
+                              mb: 1,
+                              textAlign: 'center',
+                              zIndex: 1
+                            }}
+                          >
+                            {experience.location}
+                          </Typography>
+                          
+                          <Typography 
+                            variant="body2" 
+                            sx={{ 
+                              color: 'rgba(255, 255, 255, 0.7)',
+                              mb: 2,
+                              textAlign: 'center',
+                              zIndex: 1
+                            }}
+                          >
+                            {experience.period}
+                          </Typography>
+                          
+                          <Typography 
+                            variant="body1" 
+                            sx={{ 
+                              color: '#ffffff',
+                              fontWeight: 600,
+                              background: 'rgba(0, 0, 0, 0.3)',
+                              borderRadius: '4px',
+                              px: 2,
+                              py: 0.5,
+                              textAlign: 'center',
+                              zIndex: 1
+                            }}
+                          >
+                            {experience.position}
+                          </Typography>
+
+                          <Box sx={{ 
+                            display: 'flex', 
+                            flexWrap: 'wrap', 
                             justifyContent: 'center',
-                            alignItems: 'center',
-                            width: 40,
-                            height: 40,
-                            borderRadius: '50%',
-                            background: 'rgba(45, 27, 76, 0.5)',
-                            backdropFilter: 'blur(5px)'
-                          }}
-                        >
-                          {project.icon}
+                            gap: 1,
+                            mt: 3,
+                            zIndex: 1
+                          }}>
+                            {experience.tags.map((tag, tagIndex) => (
+                              <Chip 
+                                key={tagIndex}
+                                label={tag}
+                                size="small"
+                                sx={{ 
+                                  background: 'rgba(255, 255, 255, 0.1)',
+                                  color: 'rgba(255, 255, 255, 0.85)',
+                                  fontWeight: 500,
+                                  borderRadius: '4px',
+                                  '&:hover': {
+                                    background: 'rgba(255, 255, 255, 0.2)',
+                                  }
+                                }}
+                              />
+                            ))}
+                          </Box>
                         </Box>
-                        <Typography 
-                          variant="body1" 
-                          component="p"
-                          sx={{ 
-                            color: '#ffffff',
-                            fontWeight: 500,
-                            fontSize: '1rem',
-                            lineHeight: 1.5
-                          }}
-                        >
-                          {project.result}
-                        </Typography>
-                      </Box>
-                    </CardContent>
+                      </Grid>
+
+                      {/* Achievements (Right Side) */}
+                      <Grid item xs={12} md={8}>
+                        <CardContent sx={{ p: 4 }}>
+                          <Typography 
+                            variant="h6" 
+                            component="h4"
+                            sx={{ 
+                              color: '#ffffff',
+                              fontWeight: 600,
+                              mb: 2,
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 1
+                            }}
+                          >
+                            {experience.secondaryIcon}
+                            Key Achievements
+                          </Typography>
+
+                          <Box component="ul" sx={{ 
+                            pl: 3,
+                            mt: 2,
+                            mb: 0,
+                            '& li': {
+                              color: 'rgba(255, 255, 255, 0.85)',
+                              fontSize: '0.95rem',
+                              mb: 1.5,
+                              position: 'relative',
+                              '&::marker': {
+                                color: experience.color.replace('0.8', '1'),
+                              }
+                            }
+                          }}>
+                            {experience.achievements.map((achievement, i) => (
+                              <motion.li 
+                                key={i}
+                                initial={{ x: 20, opacity: 0 }}
+                                animate={inView ? { 
+                                  x: 0, 
+                                  opacity: 1,
+                                  transition: { 
+                                    delay: 0.4 + i * 0.1,
+                                    duration: 0.5,
+                                    ease: "easeOut"
+                                  }
+                                } : { x: 20, opacity: 0 }}
+                              >
+                                {achievement}
+                              </motion.li>
+                            ))}
+                          </Box>
+                        </CardContent>
+                      </Grid>
+                    </Grid>
                   </Card>
                 </motion.div>
               </Grid>
