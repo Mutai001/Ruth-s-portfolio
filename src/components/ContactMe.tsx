@@ -42,12 +42,14 @@ export default function ContactSection() {
   const [snackbar, setSnackbar] = useState<{
     open: boolean;
     message: string;
-    severity: 'success' | 'error' | 'warning' | 'info';
+    severity: 'success' | 'error' | 'info' | 'warning';
   }>({
     open: false,
     message: '',
     severity: 'success'
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Contact information
   const contactInfo = {
@@ -55,6 +57,9 @@ export default function ContactSection() {
     phone: '+254746421346',
     linkedin: 'linkedin.com/in/ruth-kimeli'
   };
+
+  // Your Spree Form ID - replace this with your actual ID
+  const spreeFormId = 'your-spree-form-id';
 
   useEffect(() => {
     if (inView) {
@@ -88,20 +93,39 @@ export default function ContactSection() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
     try {
-      // Spree form submission
-      const formData = new FormData();
-      formData.append('name', formState.name);
-      formData.append('email', formState.email);
-      formData.append('message', formState.message);
-      formData.append('_to', contactInfo.email);
+      // Instead of direct fetch, use a form submission approach
+      // This creates a hidden form that submits to Spree
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = `https://spreeform.com/to/${spreeFormId}`;
+      form.target = '_blank'; // This opens in new tab but can be made hidden with an iframe
       
-      // Replace with your actual Spree form endpoint
-      await fetch('https://spreeform.com/to/your-spree-form-id', {
-        method: 'POST',
-        body: formData,
-      });
+      // Add form fields
+      const addField = (name: string, value: string) => {
+        const hiddenField = document.createElement('input');
+        hiddenField.type = 'hidden';
+        hiddenField.name = name;
+        hiddenField.value = value;
+        form.appendChild(hiddenField);
+      };
+      
+      // Add all our form fields
+      addField('name', formState.name);
+      addField('email', formState.email);
+      addField('message', formState.message);
+      addField('_to', contactInfo.email);
+      
+      // Add the form to the page and submit it
+      document.body.appendChild(form);
+      form.submit();
+      
+      // Clean up the form
+      setTimeout(() => {
+        document.body.removeChild(form);
+      }, 100);
       
       setSnackbar({
         open: true,
@@ -115,12 +139,15 @@ export default function ContactSection() {
         email: '',
         message: ''
       });
-    } catch {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
       setSnackbar({
         open: true,
         message: 'Something went wrong. Please try again later.',
         severity: 'error'
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -429,6 +456,9 @@ export default function ContactSection() {
                 <Paper 
                   elevation={0}
                   component="form"
+                  action={`https://spreeform.com/to/${spreeFormId}`}
+                  method="POST"
+                  target="_blank"
                   onSubmit={handleSubmit}
                   sx={{ 
                     background: 'rgba(18, 18, 18, 0.5)',
@@ -438,6 +468,9 @@ export default function ContactSection() {
                     border: '1px solid rgba(255, 255, 255, 0.05)'
                   }}
                 >
+                  {/* Hidden field for recipient email */}
+                  <input type="hidden" name="_to" value={contactInfo.email} />
+                  
                   <Typography 
                     variant="h5" 
                     component="h3" 
@@ -584,6 +617,7 @@ export default function ContactSection() {
                           variant="contained"
                           fullWidth
                           size="large"
+                          disabled={isSubmitting}
                           endIcon={<SendIcon />}
                           sx={{
                             background: 'linear-gradient(45deg, #673ab7 0%, #f50057 100%)',
@@ -593,10 +627,14 @@ export default function ContactSection() {
                             fontWeight: 600,
                             textTransform: 'none',
                             fontSize: '1rem',
-                            boxShadow: '0 4px 20px rgba(245, 0, 87, 0.3)'
+                            boxShadow: '0 4px 20px rgba(245, 0, 87, 0.3)',
+                            '&.Mui-disabled': {
+                              background: 'linear-gradient(45deg, rgba(103, 58, 183, 0.5) 0%, rgba(245, 0, 87, 0.5) 100%)',
+                              color: 'rgba(255, 255, 255, 0.7)'
+                            }
                           }}
                         >
-                          Send Message
+                          {isSubmitting ? 'Sending...' : 'Send Message'}
                         </Button>
                       </motion.div>
                     </Grid>
@@ -611,15 +649,6 @@ export default function ContactSection() {
             variants={itemVariants}
             style={{ marginTop: '60px', textAlign: 'center' }}
           >
-            <Typography 
-              variant="body2" 
-              sx={{ 
-                color: 'rgba(255, 255, 255, 0.6)',
-                fontWeight: 500
-              }}
-            >
-              © {new Date().getFullYear()} Ruth Kimeli • Social Media Manager
-            </Typography>
           </motion.div>
         </motion.div>
       </Container>
