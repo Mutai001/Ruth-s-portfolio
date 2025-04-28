@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-scroll';
 import { 
-  Container, 
   Box, 
   Typography, 
+  Container, 
   Grid, 
-  Link, 
   IconButton, 
   Divider,
   useMediaQuery,
@@ -46,24 +46,34 @@ export default function Footer() {
     });
   };
 
-  // Footer links
+  // Scroll settings
+  const scrollSettings = {
+    smooth: true,
+    duration: 500,
+    spy: false,
+    offset: -70
+  };
+
+  // Footer links - updated to match Navbar and App components
   const footerLinks = [
     { 
       title: 'Navigation', 
       items: [
-        { label: 'About Me', href: '#about' },
-        { label: 'Selected Work', href: '#work' },
-        { label: 'Testimonials', href: '#testimonials' },
-        { label: 'Contact', href: '#contact' }
+        { label: 'About Me', id: 'about' },
+        { label: 'Skills', id: 'skills' },
+        { label: 'Education', id: 'education' },
+        { label: 'Experience', id: 'work' },
+        { label: 'Testimonials', id: 'testimonials' },
+        { label: 'Contact', id: 'contact' }
       ]
     },
     { 
       title: 'Services', 
       items: [
-        { label: 'Social Media Strategy', href: '#services' },
-        { label: 'Content Creation', href: '#services' },
-        { label: 'Community Management', href: '#services' },
-        { label: 'Analytics & Reporting', href: '#services' }
+        { label: 'Social Media Strategy', id: 'skills' },
+        { label: 'Content Creation', id: 'skills' },
+        { label: 'Community Management', id: 'skills' },
+        { label: 'Analytics & Reporting', id: 'skills' }
       ]
     }
   ];
@@ -203,31 +213,39 @@ export default function Footer() {
                       sx={{ mb: 1.5 }}
                     >
                       <Link
-                        href={item.href}
-                        underline="none"
-                        sx={{
+                        to={item.id}
+                        {...scrollSettings}
+                        style={{
                           color: '#e0e0e0',
+                          textDecoration: 'none',
                           position: 'relative',
-                          '&::after': {
-                            content: '""',
-                            position: 'absolute',
-                            bottom: -2,
-                            left: 0,
-                            width: '0%',
-                            height: '2px',
-                            backgroundColor: '#f50057',
-                            transition: 'all 0.3s ease'
-                          },
-                          '&:hover': {
-                            color: '#ffffff',
-                            textDecoration: 'none'
-                          },
-                          '&:hover::after': {
-                            width: '100%'
-                          }
+                          cursor: 'pointer',
+                          display: 'inline-block'
                         }}
+                        className="footer-link"
                       >
-                        {item.label}
+                        <Box
+                          sx={{
+                            '&::after': {
+                              content: '""',
+                              position: 'absolute',
+                              bottom: -2,
+                              left: 0,
+                              width: '0%',
+                              height: '2px',
+                              backgroundColor: '#f50057',
+                              transition: 'all 0.3s ease'
+                            },
+                            '&:hover': {
+                              color: '#ffffff',
+                              '&::after': {
+                                width: '100%'
+                              }
+                            }
+                          }}
+                        >
+                          {item.label}
+                        </Box>
                       </Link>
                     </Box>
                   ))}
@@ -266,24 +284,23 @@ export default function Footer() {
                 flexDirection: 'column', 
                 gap: 1.5 
               }}>
-                <Link 
-                  href="mailto:hello@ruthkimeli.com"
-                  underline="none"
-                  sx={{ 
+                <a 
+                  href="mailto:Kimeliruthj@gmail.com"
+                  style={{ 
                     color: '#e0e0e0',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 1,
-                    '&:hover': {
-                      color: '#ffffff'
-                    }
+                    gap: '8px',
+                    textDecoration: 'none'
                   }}
+                  onMouseOver={(e) => e.currentTarget.style.color = '#ffffff'}
+                  onMouseOut={(e) => e.currentTarget.style.color = '#e0e0e0'}
                 >
                   <EmailIcon fontSize="small" />
                   <Typography variant="body2">
-                    hello@ruthkimeli.com
+                    Kimeliruthj@gmail.com
                   </Typography>
-                </Link>
+                </a>
               </Box>
             </motion.div>
           </Grid>
@@ -313,24 +330,30 @@ export default function Footer() {
           
           <Box sx={{ display: 'flex', gap: 3 }}>
             <Link 
-              href="#privacy" 
-              underline="none"
-              sx={{ 
+              to="about"
+              {...scrollSettings}
+              style={{ 
                 color: 'rgba(255,255,255,0.6)',
                 fontSize: '0.875rem',
-                '&:hover': { color: '#ffffff' }
+                textDecoration: 'none',
+                cursor: 'pointer'
               }}
+              onMouseOver={(e) => e.currentTarget.style.color = '#ffffff'}
+              onMouseOut={(e) => e.currentTarget.style.color = 'rgba(255,255,255,0.6)'}
             >
               Privacy Policy
             </Link>
             <Link 
-              href="#terms" 
-              underline="none"
-              sx={{ 
+              to="about"
+              {...scrollSettings} 
+              style={{ 
                 color: 'rgba(255,255,255,0.6)',
                 fontSize: '0.875rem',
-                '&:hover': { color: '#ffffff' }
+                textDecoration: 'none',
+                cursor: 'pointer'
               }}
+              onMouseOver={(e) => e.currentTarget.style.color = '#ffffff'}
+              onMouseOut={(e) => e.currentTarget.style.color = 'rgba(255,255,255,0.6)'}
             >
               Terms of Service
             </Link>
