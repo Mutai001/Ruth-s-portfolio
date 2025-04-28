@@ -3,6 +3,8 @@ import { motion, useAnimation } from 'framer-motion';
 import { Typography, Container, Box, Grid, Paper, Avatar, useMediaQuery, useTheme, Divider } from '@mui/material';
 import { useInView } from 'react-intersection-observer';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
+import client1 from '../images/anime heros (1).jpg';
+import client2 from '../images/heros (2).jpg';
 
 export default function TestimonialsSection() {
   const theme = useTheme();
@@ -49,7 +51,7 @@ export default function TestimonialsSection() {
       quote: "Working with Ruth transformed our Instagram presence. Our followers doubled in just 6 months, and engagement rates increased by 78%. She truly understands how to build community.",
       author: "Sarah Johnson",
       position: "Marketing Director, TechStart",
-      avatar: "/api/placeholder/80/80",
+      avatar: client1,
       color: "#673ab7"
     },
     {
@@ -57,7 +59,7 @@ export default function TestimonialsSection() {
       quote: "Ruth's strategic approach to our social campaigns delivered impressive ROI. Her data-driven content creation not only looked beautiful but converted followers into customers.",
       author: "Michael Chen",
       position: "CEO, Luxe Beauty",
-      avatar: "/api/placeholder/80/80",
+      avatar: client2,
       color: "#f50057"
     }
   ];
