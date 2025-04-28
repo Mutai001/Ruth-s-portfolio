@@ -19,7 +19,7 @@ import {
 import { useInView } from 'react-intersection-observer';
 import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import InstagramIcon from '@mui/icons-material/Instagram';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import SendIcon from '@mui/icons-material/Send';
 import PersonIcon from '@mui/icons-material/Person';
 import SubjectIcon from '@mui/icons-material/Subject';
@@ -42,12 +42,19 @@ export default function ContactSection() {
   const [snackbar, setSnackbar] = useState<{
     open: boolean;
     message: string;
-    severity: 'success' | 'error' | 'info' | 'warning';
+    severity: 'success' | 'error' | 'warning' | 'info';
   }>({
     open: false,
     message: '',
     severity: 'success'
   });
+
+  // Contact information
+  const contactInfo = {
+    email: 'Kimeliruthj@gmail.com',
+    phone: '+254746421346',
+    linkedin: 'linkedin.com/in/ruth-kimeli'
+  };
 
   useEffect(() => {
     if (inView) {
@@ -79,23 +86,45 @@ export default function ContactSection() {
     }
   };
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // In a real implementation, this would send the form data to a server
-    setSnackbar({
-      open: true,
-      message: 'Thanks for reaching out! I\'ll get back to you soon.',
-      severity: 'success'
-    });
-    // Reset form
-    setFormState({
-      name: '',
-      email: '',
-      message: ''
-    });
+    
+    try {
+      // Spree form submission
+      const formData = new FormData();
+      formData.append('name', formState.name);
+      formData.append('email', formState.email);
+      formData.append('message', formState.message);
+      formData.append('_to', contactInfo.email);
+      
+      // Replace with your actual Spree form endpoint
+      await fetch('https://spreeform.com/to/your-spree-form-id', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      setSnackbar({
+        open: true,
+        message: 'Thanks for reaching out! I\'ll get back to you soon.',
+        severity: 'success'
+      });
+      
+      // Reset form
+      setFormState({
+        name: '',
+        email: '',
+        message: ''
+      });
+    } catch {
+      setSnackbar({
+        open: true,
+        message: 'Something went wrong. Please try again later.',
+        severity: 'error'
+      });
+    }
   };
 
-  const handleChange = (e: { target: { name: string; value: string; }; }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormState(prev => ({
       ...prev,
@@ -138,9 +167,27 @@ export default function ContactSection() {
 
   // Social media links
   const socialLinks = [
-    { icon: <EmailIcon />, label: 'Email', url: 'mailto:ruth.kimeli@example.com', color: '#f50057' },
-    { icon: <LinkedInIcon />, label: 'LinkedIn', url: 'https://linkedin.com/in/ruthkimeli', color: '#673ab7' },
-    { icon: <InstagramIcon />, label: 'Instagram', url: 'https://instagram.com/ruth.social', color: '#ff4081' }
+    { 
+      icon: <WhatsAppIcon />, 
+      label: 'WhatsApp', 
+      url: `https://wa.me/${contactInfo.phone.replace(/\+|\s/g, '')}`, 
+      color: '#25D366',
+      display: contactInfo.phone
+    },
+    { 
+      icon: <EmailIcon />, 
+      label: 'Email', 
+      url: `mailto:${contactInfo.email}`, 
+      color: '#f50057',
+      display: contactInfo.email
+    },
+    { 
+      icon: <LinkedInIcon />, 
+      label: 'LinkedIn', 
+      url: `https://${contactInfo.linkedin}`, 
+      color: '#0077B5',
+      display: contactInfo.linkedin
+    }
   ];
 
   return (
@@ -152,6 +199,7 @@ export default function ContactSection() {
         overflow: 'hidden'
       }}
       ref={ref}
+      id="contact"
     >
       {/* Animated background shapes */}
       {backgroundShapes.map((shape, index) => (
@@ -272,12 +320,18 @@ export default function ContactSection() {
                         transition={{ type: "spring", stiffness: 400, damping: 10 }}
                       >
                         <Box 
+                          component="a"
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           sx={{ 
                             display: 'flex', 
                             alignItems: 'center',
                             mb: 2,
                             py: 1,
-                            borderBottom: index !== socialLinks.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none'
+                            borderBottom: index !== socialLinks.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
+                            textDecoration: 'none',
+                            color: 'inherit'
                           }}
                         >
                           <Box 
@@ -309,12 +363,9 @@ export default function ContactSection() {
                             </Typography>
                             
                             <Typography 
-                              component="a"
-                              href={link.url}
                               variant="body2" 
                               sx={{ 
                                 color: '#ffffff',
-                                textDecoration: 'none',
                                 fontWeight: 500,
                                 '&:hover': {
                                   color: link.color,
@@ -322,7 +373,7 @@ export default function ContactSection() {
                                 }
                               }}
                             >
-                              {link.label === 'Email' ? 'ruth.kimeli@example.com' : link.url.split('/').pop()}
+                              {link.display}
                             </Typography>
                           </Box>
                         </Box>
@@ -348,6 +399,8 @@ export default function ContactSection() {
                         <IconButton
                           component="a"
                           href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           aria-label={link.label}
                           sx={{ 
                             color: '#ffffff',
