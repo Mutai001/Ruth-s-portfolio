@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { Typography, Container, Box, Grid, Card, CardMedia, CardContent, useMediaQuery, useTheme, Divider } from '@mui/material';
 import { useInView } from 'react-intersection-observer';
@@ -6,11 +6,14 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PeopleIcon from '@mui/icons-material/People';
+import project1 from '../assets/brandgrowth.jpg';
+import project2 from '../assets/content marketing.jpg';
+import project3 from '../assets/heros iamge.jpg';   
+import project4 from '../assets/social meadia.jpg';
 
 export default function WorkHighlightsSection() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const isMedium = useMediaQuery(theme.breakpoints.down('md'));
   const controls = useAnimation();
   const [ref, inView] = useInView({
     threshold: 0.1,
@@ -51,28 +54,28 @@ export default function WorkHighlightsSection() {
   const projects = [
     {
       id: 1,
-      image: "/api/placeholder/600/400",
+      image: project1,
       result: "Increased engagement by 45% for Luxe Beauty within 3 months",
       icon: <TrendingUpIcon sx={{ color: '#f50057' }} />,
       color: "rgba(245, 0, 87, 0.8)"
     },
     {
       id: 2,
-      image: "/api/placeholder/600/400",
+      image: project2,
       result: "Created a viral post that reached 1.2M users organically",
       icon: <VisibilityIcon sx={{ color: '#673ab7' }} />,
       color: "rgba(103, 58, 183, 0.8)"
     },
     {
       id: 3,
-      image: "/api/placeholder/600/400",
+      image: project3,
       result: "Generated 15K+ new followers for TechStart through targeted campaigns",
       icon: <PeopleIcon sx={{ color: '#2196f3' }} />,
       color: "rgba(33, 150, 243, 0.8)"
     },
     {
       id: 4,
-      image: "/api/placeholder/600/400",
+      image: project4,
       result: "Achieved 300% higher engagement rate than industry average for FitLife",
       icon: <FavoriteIcon sx={{ color: '#ff4081' }} />,
       color: "rgba(255, 64, 129, 0.8)"
