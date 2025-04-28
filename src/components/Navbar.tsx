@@ -47,7 +47,7 @@ export default function Navbar() {
     { title: 'About Me', id: 'about' },
     { title: 'Skills', id: 'skills' },
     { title: 'Education', id: 'education' },
-    { title: 'Selected Work', id: 'work' },
+    { title: 'Experience', id: 'work' },
     { title: 'Testimonials', id: 'testimonials' },
     { title: 'Contact', id: 'contact' }
   ];
@@ -146,7 +146,7 @@ export default function Navbar() {
   );
 
   // Email handler function
-  const handleEmailClick = (e) => {
+  const handleEmailClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     window.location.href = 'mailto:Kimeliruthj@gmail.com';
   };
