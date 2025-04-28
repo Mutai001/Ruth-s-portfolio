@@ -3,6 +3,7 @@ import { Button, Typography, Container, Box, Grid, useMediaQuery, useTheme } fro
 import DownloadIcon from '@mui/icons-material/Download';
 import WorkIcon from '@mui/icons-material/Work';
 import HomePageImage from '../images/anime heros (1).jpg'; // Replace with your image path
+import ruthcv from '../assets/Ruth Kimeli Resume Final.pdf'
 
 export default function HeroSection() {
   const theme = useTheme();
@@ -72,6 +73,27 @@ export default function HeroSection() {
       repeat: Infinity,
       ease: "easeInOut"
     }
+  };
+
+  // Function to handle downloading the CV
+  const handleDownloadCV = () => {
+    // Replace 'your-cv-file.pdf' with the actual path to your CV file
+    const cvFileURL = ruthcv; // Use the imported CV file
+    
+    // Create an anchor element
+    const link = document.createElement('a');
+    link.href = cvFileURL;
+    link.download = 'Ruth_Kimeli_CV.pdf';
+    
+    // Append to the document, click it, and remove it
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // Function to handle sending an email
+  const handleHireMe = () => {
+    window.location.href = 'mailto:Kimeliruthj@gmail.com?subject=Job Opportunity&body=Hello Ruth, I would like to discuss a potential job opportunity with you.';
   };
 
   return (
@@ -178,6 +200,7 @@ export default function HeroSection() {
                       variant="contained" 
                       size="large"
                       startIcon={<WorkIcon />}
+                      onClick={handleHireMe}
                       sx={{ 
                         background: 'linear-gradient(45deg, #673ab7 30%, #9c27b0 90%)',
                         color: 'white',
@@ -198,6 +221,7 @@ export default function HeroSection() {
                       variant="outlined" 
                       size="large"
                       startIcon={<DownloadIcon />}
+                      onClick={handleDownloadCV}
                       sx={{ 
                         borderColor: '#b39ddb',
                         color: '#b39ddb',
