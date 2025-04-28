@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "./components/Navbar"; // Import the Navbar component
 import HomePage from "./components/HomePage";
 import Portfolio from "./components/Portfolio";
-import Certifications from "./components/Certifications";
+import TestimonialsSection from "./components/Testimonials";
 import ContactMe from "./components/ContactMe";
 import Footer from "./components/Footer";
 import WorkHighlightsSection from "./components/Work";
@@ -14,7 +14,7 @@ const App: React.FC = () => {
      <HomePage />
       <Portfolio />
       <WorkHighlightsSection />
-      <Certifications />
+      <TestimonialsSection/>
       <ContactMe />
       <Footer />
     </div>
