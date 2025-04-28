@@ -17,12 +17,54 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import EmailIcon from '@mui/icons-material/Email';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 export default function Footer() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [showScrollTop, setShowScrollTop] = useState(false);
+  
+  // Contact information - imported from ContactSection
+  const contactInfo = {
+    email: 'Kimeliruthj@gmail.com',
+    phone: '+254746421346',
+    linkedin: 'linkedin.com/in/ruth-kimeli'
+  };
+
+  // Social media links - using the same data as ContactSection
+  const socialLinks = [
+    { 
+      icon: <LinkedInIcon />, 
+      label: 'LinkedIn', 
+      url: `https://${contactInfo.linkedin}`, 
+      color: '#0077B5'
+    },
+    { 
+      icon: <WhatsAppIcon />, 
+      label: 'WhatsApp', 
+      url: `https://wa.me/${contactInfo.phone.replace(/\+|\s/g, '')}`, 
+      color: '#25D366'
+    },
+    { 
+      icon: <EmailIcon />, 
+      label: 'Email', 
+      url: `mailto:${contactInfo.email}`, 
+      color: '#f50057'
+    },
+    { 
+      icon: <TwitterIcon />, 
+      label: 'Twitter', 
+      url: '#', 
+      color: '#1DA1F2'
+    },
+    { 
+      icon: <InstagramIcon />, 
+      label: 'Instagram', 
+      url: '#', 
+      color: '#E1306C'
+    }
+  ];
   
   // Handle scroll behavior for "scroll to top" button
   useEffect(() => {
@@ -161,20 +203,26 @@ export default function Footer() {
                   viewport={{ once: true }}
                 >
                   <Box sx={{ display: 'flex', gap: 1 }}>
-                    {[LinkedInIcon, TwitterIcon, InstagramIcon, EmailIcon].map((Icon, index) => (
+                    {socialLinks.slice(0, 4).map((link, index) => (
                       <IconButton 
                         key={index}
+                        component="a"
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={link.label}
                         sx={{ 
                           color: '#e0e0e0',
                           background: 'rgba(255, 255, 255, 0.1)',
                           '&:hover': {
-                            background: 'rgba(255, 255, 255, 0.2)',
+                            background: link.color,
+                            color: '#ffffff',
                             transform: 'translateY(-3px)',
                             transition: 'all 0.2s ease-in-out'
                           }
                         }}
                       >
-                        <Icon />
+                        {link.icon}
                       </IconButton>
                     ))}
                   </Box>
@@ -284,8 +332,9 @@ export default function Footer() {
                 flexDirection: 'column', 
                 gap: 1.5 
               }}>
+                {/* Email contact */}
                 <a 
-                  href="mailto:Kimeliruthj@gmail.com"
+                  href={`mailto:${contactInfo.email}`}
                   style={{ 
                     color: '#e0e0e0',
                     display: 'flex',
@@ -298,7 +347,49 @@ export default function Footer() {
                 >
                   <EmailIcon fontSize="small" />
                   <Typography variant="body2">
-                    Kimeliruthj@gmail.com
+                    {contactInfo.email}
+                  </Typography>
+                </a>
+                
+                {/* Phone/WhatsApp contact */}
+                <a 
+                  href={`https://wa.me/${contactInfo.phone.replace(/\+|\s/g, '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ 
+                    color: '#e0e0e0',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    textDecoration: 'none'
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.color = '#ffffff'}
+                  onMouseOut={(e) => e.currentTarget.style.color = '#e0e0e0'}
+                >
+                  <WhatsAppIcon fontSize="small" />
+                  <Typography variant="body2">
+                    {contactInfo.phone}
+                  </Typography>
+                </a>
+                
+                {/* LinkedIn contact */}
+                <a 
+                  href={`https://${contactInfo.linkedin}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ 
+                    color: '#e0e0e0',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    textDecoration: 'none'
+                  }}
+                  onMouseOver={(e) => e.currentTarget.style.color = '#ffffff'}
+                  onMouseOut={(e) => e.currentTarget.style.color = '#e0e0e0'}
+                >
+                  <LinkedInIcon fontSize="small" />
+                  <Typography variant="body2">
+                    {contactInfo.linkedin}
                   </Typography>
                 </a>
               </Box>
