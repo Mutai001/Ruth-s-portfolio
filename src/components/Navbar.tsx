@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-scroll';
 import { 
   AppBar, 
   Toolbar, 
@@ -76,6 +77,15 @@ export default function Navbar() {
     setDrawerOpen(!drawerOpen);
   };
 
+  // Scroll settings
+  const scrollSettings = {
+    smooth: true,
+    duration: 500,
+    spy: true,
+    offset: -70, // Adjust based on your header height
+    activeClass: "active"
+  };
+
   // Custom animated logo component
   const AnimatedLogo = () => (
     <motion.div
@@ -84,50 +94,52 @@ export default function Navbar() {
       animate="visible"
       whileHover={{ scale: 1.05 }}
     >
-      <Box sx={{ 
-        display: 'flex', 
-        alignItems: 'center',
-        position: 'relative'
-      }}>
-        {/* Animated logo background */}
-        <motion.div
-          animate={{
-            rotate: [0, 360],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          style={{
-            position: 'absolute',
-            width: 40,
-            height: 40,
-            borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
-            background: 'linear-gradient(45deg, #673ab7 30%, #f50057 90%)',
-            opacity: 0.8,
-            zIndex: 0,
-          }}
-        />
-        
-        {/* Logo text */}
-        <Typography
-          variant="h6"
-          component="div"
-          sx={{
-            fontWeight: 800,
-            fontSize: isMobile ? '1.2rem' : '1.5rem',
-            ml: 5,
-            zIndex: 1,
-            background: 'linear-gradient(to right, #ffffff, #b39ddb)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
-          }}
-        >
-          RK
-        </Typography>
-      </Box>
+      <Link to="home" {...scrollSettings} style={{ cursor: 'pointer' }}>
+        <Box sx={{ 
+          display: 'flex', 
+          alignItems: 'center',
+          position: 'relative'
+        }}>
+          {/* Animated logo background */}
+          <motion.div
+            animate={{
+              rotate: [0, 360],
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            style={{
+              position: 'absolute',
+              width: 40,
+              height: 40,
+              borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
+              background: 'linear-gradient(45deg, #673ab7 30%, #f50057 90%)',
+              opacity: 0.8,
+              zIndex: 0,
+            }}
+          />
+          
+          {/* Logo text */}
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              fontWeight: 800,
+              fontSize: isMobile ? '1.2rem' : '1.5rem',
+              ml: 5,
+              zIndex: 1,
+              background: 'linear-gradient(to right, #ffffff, #b39ddb)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}
+          >
+            RK
+          </Typography>
+        </Box>
+      </Link>
     </motion.div>
   );
 
@@ -143,7 +155,8 @@ export default function Navbar() {
         backdropFilter: scrolled ? 'blur(8px)' : 'none',
         transition: 'all 0.3s ease-in-out',
         borderBottom: scrolled ? '1px solid rgba(255,255,255,0.1)' : 'none',
-        py: scrolled ? 0.5 : 1.5
+        py: scrolled ? 0.5 : 1.5,
+        zIndex: 1000
       }}
     >
       <Container maxWidth="lg">
@@ -164,32 +177,40 @@ export default function Navbar() {
                   whileHover={{ y: -3 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Button
-                    color="inherit"
-                    sx={{
-                      mx: 1,
-                      color: '#e0e0e0',
-                      position: 'relative',
-                      fontWeight: 500,
-                      '&::after': {
-                        content: '""',
-                        position: 'absolute',
-                        bottom: -2,
-                        left: '50%',
-                        width: '0%',
-                        height: '2px',
-                        backgroundColor: '#f50057',
-                        transition: 'all 0.3s ease',
-                        transform: 'translateX(-50%)'
-                      },
-                      '&:hover::after': {
-                        width: '80%'
-                      }
-                    }}
-                    href={`#${item.id}`}
+                  <Link
+                    to={item.id}
+                    {...scrollSettings}
+                    style={{ textDecoration: 'none' }}
                   >
-                    {item.title}
-                  </Button>
+                    <Button
+                      color="inherit"
+                      sx={{
+                        mx: 1,
+                        color: '#e0e0e0',
+                        position: 'relative',
+                        fontWeight: 500,
+                        '&::after': {
+                          content: '""',
+                          position: 'absolute',
+                          bottom: -2,
+                          left: '50%',
+                          width: '0%',
+                          height: '2px',
+                          backgroundColor: '#f50057',
+                          transition: 'all 0.3s ease',
+                          transform: 'translateX(-50%)'
+                        },
+                        '&:hover::after': {
+                          width: '80%'
+                        },
+                        '&.active::after': {
+                          width: '80%'
+                        }
+                      }}
+                    >
+                      {item.title}
+                    </Button>
+                  </Link>
                 </motion.div>
               ))}
               
@@ -201,21 +222,26 @@ export default function Navbar() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button 
-                  variant="contained" 
-                  startIcon={<EmailIcon />}
-                  sx={{ 
-                    ml: 3,
-                    background: 'linear-gradient(45deg, #673ab7 30%, #9c27b0 90%)',
-                    color: 'white',
-                    fontWeight: 600,
-                    borderRadius: 2,
-                    textTransform: 'none'
-                  }}
-                  href="#contact"
+                <Link
+                  to="contact"
+                  {...scrollSettings}
+                  style={{ textDecoration: 'none' }}
                 >
-                  Get in Touch
-                </Button>
+                  <Button 
+                    variant="contained" 
+                    startIcon={<EmailIcon />}
+                    sx={{ 
+                      ml: 3,
+                      background: 'linear-gradient(45deg, #673ab7 30%, #9c27b0 90%)',
+                      color: 'white',
+                      fontWeight: 600,
+                      borderRadius: 2,
+                      textTransform: 'none'
+                    }}
+                  >
+                    Get in Touch
+                  </Button>
+                </Link>
               </motion.div>
             </Box>
           )}
@@ -306,27 +332,34 @@ export default function Navbar() {
                 }}
                 exit={{ opacity: 0, x: -20 }}
               >
-                <ListItem 
-                  onClick={handleDrawerToggle}
-                  component="a"
-                  href={`#${item.id}`}
+                <ListItem
+                  component="div"
                   sx={{
                     mb: 1,
                     borderRadius: 2,
                     '&:hover': {
                       backgroundColor: 'rgba(255,255,255,0.1)'
-                    }
+                    },
+                    padding: 0
                   }}
                 >
-                  <ListItemText 
-                    primary={item.title} 
-                    sx={{ 
-                      color: '#e0e0e0',
-                      '& .MuiTypography-root': {
-                        fontWeight: 500
-                      }
-                    }}
-                  />
+                  <Link
+                    to={item.id}
+                    {...scrollSettings}
+                    style={{ width: '100%', textDecoration: 'none' }}
+                    onClick={handleDrawerToggle}
+                  >
+                    <ListItemText 
+                      primary={item.title} 
+                      sx={{ 
+                        color: '#e0e0e0',
+                        padding: '8px 16px',
+                        '& .MuiTypography-root': {
+                          fontWeight: 500
+                        }
+                      }}
+                    />
+                  </Link>
                 </ListItem>
               </motion.div>
             ))}
@@ -334,23 +367,28 @@ export default function Navbar() {
         </List>
         
         <Box sx={{ mt: 4, textAlign: 'center' }}>
-          <Button 
-            variant="contained" 
-            fullWidth
-            startIcon={<EmailIcon />}
-            sx={{ 
-              background: 'linear-gradient(45deg, #673ab7 30%, #9c27b0 90%)',
-              color: 'white',
-              fontWeight: 600,
-              borderRadius: 2,
-              py: 1.2,
-              textTransform: 'none'
-            }}
-            href="#contact"
+          <Link
+            to="contact"
+            {...scrollSettings}
+            style={{ textDecoration: 'none', width: '100%' }}
             onClick={handleDrawerToggle}
           >
-            Get in Touch
-          </Button>
+            <Button 
+              variant="contained" 
+              fullWidth
+              startIcon={<EmailIcon />}
+              sx={{ 
+                background: 'linear-gradient(45deg, #673ab7 30%, #9c27b0 90%)',
+                color: 'white',
+                fontWeight: 600,
+                borderRadius: 2,
+                py: 1.2,
+                textTransform: 'none'
+              }}
+            >
+              Get in Touch
+            </Button>
+          </Link>
         </Box>
       </Drawer>
     </AppBar>
