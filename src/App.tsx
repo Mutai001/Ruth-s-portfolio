@@ -5,6 +5,7 @@ import Portfolio from "./components/Portfolio";
 import Certifications from "./components/Certifications";
 import ContactMe from "./components/ContactMe";
 import Footer from "./components/Footer";
+import WorkHighlightsSection from "./components/Work";
 
 const App: React.FC = () => {
   return (
@@ -12,6 +13,7 @@ const App: React.FC = () => {
       <Navbar />
      <HomePage />
       <Portfolio />
+      <WorkHighlightsSection />
       <Certifications />
       <ContactMe />
       <Footer />
