@@ -8,6 +8,8 @@ import {
   Paper} from '@mui/material';
 import SchoolIcon from '@mui/icons-material/School';
 import AutoDidactIcon from '@mui/icons-material/Psychology';
+import Graduationgap from '../images/Graduation cap.jpg';
+import Studying from '../images/studying student.jpg';
 
 export default function Education() {
   const containerRef = useRef(null);
@@ -292,7 +294,7 @@ export default function Education() {
                     }}
                   >
                     <img 
-                      src="/api/placeholder/200/180" 
+                      src= {Studying} 
                       alt="Student studying" 
                       style={{ 
                         width: '100%', 
@@ -320,7 +322,7 @@ export default function Education() {
                     }}
                   >
                     <img 
-                      src="/api/placeholder/200/180" 
+                      src={Graduationgap} 
                       alt="Graduation cap" 
                       style={{ 
                         width: '100%', 
