@@ -1,386 +1,334 @@
-import { 
-  Box,
-  Typography,
-  Button,
-  Chip,
-  Stack,
-  IconButton,
-  Link,
-  useMediaQuery,
-  useTheme
-} from "@mui/material";
-import { styled } from "@mui/system";
-import DownloadIcon from "@mui/icons-material/Download";
-import EmailIcon from "@mui/icons-material/Email";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import PersonIcon from "@mui/icons-material/Person";
-import heroImage  from "../images/anime heros (1).jpg"
+import { motion } from 'framer-motion';
+import { Button, Typography, Container, Box, Grid, useMediaQuery, useTheme } from '@mui/material';
+import DownloadIcon from '@mui/icons-material/Download';
+import WorkIcon from '@mui/icons-material/Work';
 
-// Styled components
-const ProfileImageContainer = styled(Box)(({ theme }) => ({
-  borderRadius: "50%",
-  overflow: "hidden",
-  width: 200,
-  height: 200,
-  position: "relative",
-  boxShadow: "0 0 30px #673ab7",
-  transition: "transform 0.3s ease, box-shadow 0.3s ease",
-  margin: "0 auto",
-  "&:hover": {
-    transform: "scale(1.05)",
-    boxShadow: "0 0 40px #ff4081"
-  },
-  [theme.breakpoints.down("md")]: {
-    width: 180,
-    height: 180
-  },
-  [theme.breakpoints.down("sm")]: {
-    width: 150,
-    height: 150
-  }
-}));
-
-const StyledImage = styled('img')({
-  width: "100%",
-  height: "100%",
-  objectFit: "cover",
-  objectPosition: "center",
-  transition: "transform 0.5s ease",
-  "&:hover": {
-    transform: "scale(1.1)"
-  }
-});
-
-const StyledChip = styled(Chip)({
-  fontWeight: 600,
-  borderRadius: "16px",
-  transition: "all 0.3s ease",
-  margin: "4px",
-  "&:hover": {
-    transform: "translateY(-3px)",
-    boxShadow: "0 5px 15px rgba(0,0,0,0.3)"
-  }
-});
-
-const SocialIconButton = styled(IconButton)({
-  color: "#b39ddb",
-  transition: "all 0.3s ease",
-  "&:hover": {
-    color: "#ff4081",
-    transform: "translateY(-3px) scale(1.1)"
-  }
-});
-
-const AnimatedButton = styled(Button)(({ theme }) => ({
-  fontWeight: "bold",
-  padding: "10px 24px",
-  borderRadius: "12px",
-  transition: "transform 0.3s ease, box-shadow 0.3s ease",
-  "&:hover": {
-    transform: "translateY(-3px)",
-    boxShadow: "0 8px 25px rgba(255, 64, 129, 0.5)"
-  },
-  [theme.breakpoints.down("sm")]: {
-    width: "100%",
-    marginBottom: theme.spacing(1)
-  }
-}));
-
-// Main component
-function HeroSection() {
+export default function HeroSection() {
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-  
-  // Email handling function
-  const handleHireMe = () => {
-    window.location.href = "mailto:your-email@example.com?subject=Job%20Opportunity&body=Hi%20Ruth,%20I'm%20interested%20in%20hiring%20you%20for%20a%20project.";
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMedium = useMediaQuery(theme.breakpoints.down('md'));
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { type: "spring", stiffness: 100 }
+    }
+  };
+
+  const imageVariants = {
+    hidden: { scale: 0.8, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: { 
+        type: "spring", 
+        stiffness: 50,
+        duration: 0.8
+      }
+    }
+  };
+
+  const floatingAnimation = {
+    y: [0, -15, 0],
+    transition: {
+      duration: 4,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }
+  };
+
+  const scaleAnimation = {
+    scale: [1, 1.05, 1],
+    transition: {
+      duration: 3,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }
+  };
+
+  const glowingBorder = {
+    boxShadow: [
+      "0 0 10px rgba(179, 157, 219, 0.5)",
+      "0 0 20px rgba(179, 157, 219, 0.7)",
+      "0 0 10px rgba(179, 157, 219, 0.5)"
+    ],
+    transition: {
+      duration: 2,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        width: "100%",
-        background: "linear-gradient(135deg, #121212 0%, #2d1b4c 100%)",
-        position: "relative",
-        overflow: "hidden",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: { xs: 2, sm: 4 }
+    <Box 
+      sx={{ 
+        background: `linear-gradient(135deg, #121212 0%, #2d1b4c 50%, #1e1e1e 100%)`,
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        overflow: 'hidden',
+        position: 'relative'
       }}
     >
-      {/* Background circles - creating the animated gradient effect */}
-      <Box
-        sx={{
-          position: "absolute",
-          width: "250px",
-          height: "250px",
-          borderRadius: "50%",
-          background: "rgba(103, 58, 183, 0.2)",
-          filter: "blur(60px)",
-          top: "20%",
-          left: "10%",
-          zIndex: 1,
-          animation: "float1 20s infinite ease-in-out"
-        }}
-      />
-      <Box
-        sx={{
-          position: "absolute",
-          width: "400px",
-          height: "400px",
-          borderRadius: "50%",
-          background: "rgba(255, 64, 129, 0.15)",
-          filter: "blur(60px)",
-          bottom: "20%",
-          right: "15%",
-          zIndex: 1,
-          animation: "float2 20s infinite ease-in-out"
-        }}
-      />
-      <Box
-        sx={{
-          position: "absolute",
-          width: "200px",
-          height: "200px",
-          borderRadius: "50%",
-          background: "rgba(33, 150, 243, 0.15)",
-          filter: "blur(60px)",
-          top: "70%",
-          left: "25%",
-          zIndex: 1,
-          animation: "float3 20s infinite ease-in-out"
-        }}
-      />
-      <Box
-        sx={{
-          position: "absolute",
-          width: "350px",
-          height: "350px",
-          borderRadius: "50%",
-          background: "rgba(255, 193, 7, 0.1)",
-          filter: "blur(60px)",
-          top: "10%",
-          right: "25%",
-          zIndex: 1,
-          animation: "float4 20s infinite ease-in-out"
-        }}
-      />
-
-      {/* Main content */}
-      <Box
-        sx={{
-          width: "100%",
-          maxWidth: "1200px",
-          background: "rgba(30, 30, 30, 0.7)",
-          backdropFilter: "blur(12px)",
-          borderRadius: 3,
-          p: { xs: 3, sm: 4, md: 5 },
-          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05) inset",
-          position: "relative",
-          zIndex: 10,
-          border: "1px solid rgba(255, 255, 255, 0.08)"
-        }}
-      >
-        <Stack 
-          direction={{ xs: "column", md: "row" }} 
-          spacing={{ xs: 4, md: 6 }}
-          alignItems="center"
-        >
-          {/* Profile image */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              width: { xs: "100%", md: "auto" }
+      {/* Animated background elements */}
+      <Box sx={{ position: 'absolute', width: '100%', height: '100%', overflow: 'hidden' }}>
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0.1, scale: 0.2, x: `${Math.random() * 100}%`, y: `${Math.random() * 100}%` }}
+            animate={{ 
+              opacity: [0.1, 0.2, 0.1],
+              scale: [0.2, 0.4, 0.2],
+              rotate: [0, 360]
             }}
-          >
-            <ProfileImageContainer>
-              {/* Overlay effect */}
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  background: "radial-gradient(circle, rgba(103, 58, 183, 0.4) 0%, transparent 70%)",
+            transition={{ 
+              duration: 10 + Math.random() * 10,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            style={{
+              position: 'absolute',
+              width: 100 + Math.random() * 150,
+              height: 100 + Math.random() * 150,
+              borderRadius: '50%',
+              background: i % 2 === 0 
+                ? `rgba(103, 58, 183, 0.05)`
+                : `rgba(245, 0, 87, 0.05)`,
+              filter: 'blur(40px)'
+            }}
+          />
+        ))}
+      </Box>
+      
+      <Container maxWidth="lg">
+        <Grid container spacing={4} alignItems="center" justifyContent="space-between">
+          {/* Text content */}
+          <Grid item xs={12} md={6}>
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <motion.div variants={itemVariants}>
+                <Typography 
+                  variant="overline" 
+                  component="div" 
+                  sx={{ 
+                    color: '#f50057',
+                    letterSpacing: 4,
+                    fontWeight: 600 
+                  }}
+                >
+                  Social Media Manager
+                </Typography>
+              </motion.div>
+              
+              <motion.div variants={itemVariants}>
+                <Typography 
+                  variant={isMobile ? "h3" : "h1"} 
+                  component="h1" 
+                  sx={{ 
+                    color: '#ffffff',
+                    fontWeight: 800,
+                    mb: 1,
+                    background: 'linear-gradient(to right, #ffffff, #b39ddb)', 
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent'
+                  }}
+                >
+                  Ruth Kimeli
+                </Typography>
+              </motion.div>
+              
+              <motion.div variants={itemVariants}>
+                <Typography 
+                  variant={isMobile ? "h5" : "h4"} 
+                  sx={{ 
+                    color: '#e0e0e0',
+                    mb: 4,
+                    fontWeight: 400,
+                    lineHeight: 1.4
+                  }}
+                >
+                  Driving Brands Forward Through <Box component="span" sx={{ color: '#ff4081', fontWeight: 600 }}>
+                    Powerful Social Media.
+                  </Box>
+                </Typography>
+              </motion.div>
+              
+              <motion.div variants={itemVariants}>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 4 }}>
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Button 
+                      variant="contained" 
+                      size="large"
+                      startIcon={<WorkIcon />}
+                      sx={{ 
+                        background: 'linear-gradient(45deg, #673ab7 30%, #9c27b0 90%)',
+                        color: 'white',
+                        fontWeight: 600,
+                        px: 4,
+                        py: 1.5,
+                        borderRadius: 2,
+                        textTransform: 'none',
+                        fontSize: '1rem'
+                      }}
+                    >
+                      Hire Me
+                    </Button>
+                  </motion.div>
+                  
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Button 
+                      variant="outlined" 
+                      size="large"
+                      startIcon={<DownloadIcon />}
+                      sx={{ 
+                        borderColor: '#b39ddb',
+                        color: '#b39ddb',
+                        fontWeight: 600,
+                        px: 4,
+                        py: 1.5,
+                        borderRadius: 2,
+                        textTransform: 'none',
+                        fontSize: '1rem',
+                        '&:hover': {
+                          borderColor: '#f50057',
+                          color: '#f50057',
+                        }
+                      }}
+                    >
+                      Download CV
+                    </Button>
+                  </motion.div>
+                </Box>
+              </motion.div>
+            </motion.div>
+          </Grid>
+          
+          {/* Profile image */}
+          <Grid item xs={12} md={5} sx={{ display: 'flex', justifyContent: 'center' }}>
+            <motion.div
+              variants={imageVariants}
+              initial="hidden"
+              animate="visible"
+              style={{ 
+                position: 'relative',
+                width: isMobile ? '280px' : isMedium ? '320px' : '380px',
+                height: isMobile ? '280px' : isMedium ? '320px' : '380px'
+              }}
+            >
+              {/* Background shapes */}
+              <motion.div 
+                animate={floatingAnimation} 
+                style={{ 
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
+                  background: 'rgba(103, 58, 183, 0.15)',
+                  top: '10%',
+                  left: '5%',
                   zIndex: 1
                 }}
               />
-              <StyledImage
-                alt="Ruth Kimeli"
-                src={heroImage}
+              
+              <motion.div 
+                animate={scaleAnimation} 
+                style={{ 
+                  position: 'absolute',
+                  width: '90%',
+                  height: '90%',
+                  borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%',
+                  background: 'rgba(245, 0, 87, 0.1)',
+                  top: '5%',
+                  left: '10%',
+                  zIndex: 1
+                }}
               />
-            </ProfileImageContainer>
-            
-            {/* Social Links - Mobile */}
-            <Stack 
-              direction="row" 
-              spacing={1} 
-              sx={{ 
-                mt: 3, 
-                display: { xs: "flex", md: "none" }
-              }}
-            >
-              {[
-                { icon: <FacebookIcon />, label: "Facebook" },
-                { icon: <InstagramIcon />, label: "Instagram" },
-                { icon: <LinkedInIcon />, label: "LinkedIn" },
-                { icon: <TwitterIcon />, label: "Twitter" }
-              ].map((social, index) => (
-                <SocialIconButton key={index} size="medium" aria-label={social.label}>
-                  {social.icon}
-                </SocialIconButton>
+              
+              {/* Placeholder for profile photo */}
+              <motion.div
+                animate={glowingBorder}
+                style={{
+                  position: 'relative',
+                  width: '85%',
+                  height: '85%',
+                  margin: '0 auto',
+                  borderRadius: '60% 40% 50% 50% / 50% 40% 60% 50%',
+                  overflow: 'hidden',
+                  zIndex: 2,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}
+              >
+                <img 
+                  src="/api/placeholder/400/400" 
+                  alt="Ruth Kimeli" 
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover'
+                  }}
+                />
+              </motion.div>
+              
+              {/* Floating elements */}
+              {['#f50057', '#673ab7', '#2196f3'].map((color, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ 
+                    opacity: 1, 
+                    scale: 1,
+                    x: [0, 10, 0, -10, 0],
+                    y: [0, -10, 0, 10, 0]
+                  }}
+                  transition={{
+                    delay: 1 + (index * 0.2),
+                    x: {
+                      duration: 4 + index,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    },
+                    y: {
+                      duration: 3 + index,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }
+                  }}
+                  style={{
+                    position: 'absolute',
+                    width: 20 + (index * 10),
+                    height: 20 + (index * 10),
+                    borderRadius: '50%',
+                    background: color,
+                    boxShadow: `0 0 15px ${color}`,
+                    top: `${20 + (index * 30)}%`,
+                    left: index % 2 === 0 ? '0%' : '90%',
+                    zIndex: 3
+                  }}
+                />
               ))}
-            </Stack>
-          </Box>
-
-          {/* Content */}
-          <Stack 
-            spacing={3} 
-            sx={{ 
-              textAlign: { xs: "center", md: "left" },
-              flex: 1
-            }}
-          >
-            <Box>
-              <Typography 
-                variant="h6" 
-                color="#b39ddb"
-                sx={{ mb: 1 }}
-              >
-                Hello, I'm
-              </Typography>
-              <Typography 
-                variant="h2" 
-                fontWeight="bold"
-                sx={{ 
-                  background: "linear-gradient(90deg, #9c27b0 0%, #f50057 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  fontSize: { xs: "2.2rem", sm: "2.8rem", md: "3.2rem" }
-                }}
-              >
-                Ruth Kimeli
-              </Typography>
-            </Box>
-
-            <Typography 
-              variant="body1" 
-              color="#e0e0e0" 
-              sx={{ 
-                fontSize: { xs: "1rem", md: "1.1rem" },
-                maxWidth: "600px",
-                mx: { xs: "auto", md: 0 }
-              }}
-            >
-              Social Media Manager crafting engaging digital stories and building 
-              meaningful online communities. Turning followers into fans and clicks into customers.
-            </Typography>
-
-            {/* Action buttons */}
-            <Stack 
-              direction={{ xs: "column", sm: "row" }}
-              spacing={2}
-              sx={{ 
-                justifyContent: { xs: "center", md: "flex-start" } 
-              }}
-            >
-              <AnimatedButton
-                variant="contained"
-                color="secondary"
-                size="large"
-                onClick={handleHireMe}
-                startIcon={<EmailIcon />}
-              >
-                Hire Me
-              </AnimatedButton>
-
-              <Link href="/resume.pdf" target="_blank" download style={{ textDecoration: "none" }}>
-                <AnimatedButton
-                  variant="outlined"
-                  color="primary"
-                  size="large"
-                  startIcon={<DownloadIcon />}
-                >
-                  Download Resume
-                </AnimatedButton>
-              </Link>
-            </Stack>
-
-            {/* Expertise Badges */}
-            <Box>
-              <Typography 
-                variant="subtitle1" 
-                color="#e0e0e0" 
-                sx={{ 
-                  mt: { xs: 2, md: 3 }, 
-                  mb: 2, 
-                  textAlign: { xs: "center", md: "left" } 
-                }}
-              >
-                My Expertise
-              </Typography>
-              <Box 
-                sx={{ 
-                  display: "flex", 
-                  flexWrap: "wrap",
-                  justifyContent: { xs: "center", md: "flex-start" },
-                  mx: -0.5
-                }}
-              >
-                {(
-                  [
-                    { label: "Content Strategy", color: "error" as const },
-                    { label: "Community Management", color: "primary" as const },
-                    { label: "Analytics", color: "success" as const },
-                    { label: "Paid Campaigns", color: "warning" as const },
-                    { label: "Brand Development", color: "secondary" as const }
-                  ] as const
-                ).map((expertise) => (
-                  <StyledChip 
-                    key={expertise.label}
-                    label={expertise.label}
-                    color={expertise.color}
-                    size={isSmallScreen ? "small" : "medium"}
-                  />
-                ))}
-              </Box>
-            </Box>
-
-            {/* Social Links - Desktop */}
-            <Stack 
-              direction="row" 
-              spacing={1} 
-              sx={{ 
-                mt: 3, 
-                display: { xs: "none", md: "flex" },
-                justifyContent: { xs: "center", md: "flex-start" } 
-              }}
-            >
-              {[
-                { icon: <FacebookIcon />, label: "Facebook" },
-                { icon: <InstagramIcon />, label: "Instagram" },
-                { icon: <LinkedInIcon />, label: "LinkedIn" },
-                { icon: <TwitterIcon />, label: "Twitter" },
-                { icon: <PersonIcon />, label: "Portfolio" }
-              ].map((social, index) => (
-                <SocialIconButton key={index} size="large" aria-label={social.label}>
-                  {social.icon}
-                </SocialIconButton>
-              ))}
-            </Stack>
-          </Stack>
-        </Stack>
-      </Box>
+            </motion.div>
+          </Grid>
+        </Grid>
+      </Container>
     </Box>
   );
 }
-
-export default HeroSection;
