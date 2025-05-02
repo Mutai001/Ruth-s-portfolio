@@ -10,6 +10,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import AutoDidactIcon from '@mui/icons-material/Psychology';
 import Graduationgap from '../images/Graduation cap.jpg';
 import Studying from '../images/studying student.jpg';
+import KCAUniversity from '../images/full field gown.jpeg'; 
 
 export default function Education() {
   const containerRef = useRef(null);
@@ -266,7 +267,7 @@ export default function Education() {
                     }}
                   >
                     <img 
-                      src="/api/placeholder/400/400" 
+                      src= {KCAUniversity} 
                       alt="Graduation at KCA University" 
                       style={{ 
                         width: '100%', 
