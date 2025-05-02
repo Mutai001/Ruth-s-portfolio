@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { Typography, Container, Box, Grid, useMediaQuery, useTheme, Divider, Avatar } from '@mui/material';
 import { useInView } from 'react-intersection-observer';
-import AboutMeImage from '../images/heros (2).jpg'; // Replace with your image path
+import AboutMeImage from '../images/ingown.jpeg'; // Replace with your image path
 
 export default function Portfolio() {
   const theme = useTheme();
