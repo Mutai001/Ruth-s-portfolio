@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Button, Typography, Container, Box, Grid, useMediaQuery, useTheme } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 import WorkIcon from '@mui/icons-material/Work';
-import HomePageImage from '../images/anime heros (1).jpg'; // Replace with your image path
+import HomePageImage from '../images/Heros-ruth_.jpg'; // Replace with your image path
 import ruthcv from '../assets/Ruth Kimeli Resume Final.pdf'
 
 export default function HeroSection() {
