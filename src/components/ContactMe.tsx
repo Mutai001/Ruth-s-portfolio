@@ -58,8 +58,8 @@ export default function ContactSection() {
     linkedin: 'linkedin.com/in/ruth-kimeli'
   };
 
-  // Your Spree Form ID - replace this with your actual ID
-  const spreeFormId = 'your-spree-form-id';
+  // Formspree form URL
+  const formspreeUrl = 'https://formspree.io/f/xkgrrjvv';
 
   useEffect(() => {
     if (inView) {
@@ -96,51 +96,37 @@ export default function ContactSection() {
     setIsSubmitting(true);
     
     try {
-      // Instead of direct fetch, use a form submission approach
-      // This creates a hidden form that submits to Spree
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = `https://spreeform.com/to/${spreeFormId}`;
-      form.target = '_blank'; // This opens in new tab but can be made hidden with an iframe
-      
-      // Add form fields
-      const addField = (name: string, value: string) => {
-        const hiddenField = document.createElement('input');
-        hiddenField.type = 'hidden';
-        hiddenField.name = name;
-        hiddenField.value = value;
-        form.appendChild(hiddenField);
-      };
-      
-      // Add all our form fields
-      addField('name', formState.name);
-      addField('email', formState.email);
-      addField('message', formState.message);
-      addField('_to', contactInfo.email);
-      
-      // Add the form to the page and submit it
-      document.body.appendChild(form);
-      form.submit();
-      
-      // Clean up the form
-      setTimeout(() => {
-        document.body.removeChild(form);
-      }, 100);
-      
-      setSnackbar({
-        open: true,
-        message: 'Thanks for reaching out! I\'ll get back to you soon.',
-        severity: 'success'
+      const response = await fetch(formspreeUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formState.name,
+          email: formState.email,
+          message: formState.message,
+          _replyto: formState.email,
+          _subject: `New message from ${formState.name}`
+        }),
       });
       
-      // Reset form
-      setFormState({
-        name: '',
-        email: '',
-        message: ''
-      });
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error) {
+      if (response.ok) {
+        setSnackbar({
+          open: true,
+          message: 'Thanks for reaching out! I\'ll get back to you soon.',
+          severity: 'success'
+        });
+        
+        // Reset form
+        setFormState({
+          name: '',
+          email: '',
+          message: ''
+        });
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch {
       setSnackbar({
         open: true,
         message: 'Something went wrong. Please try again later.',
@@ -456,9 +442,6 @@ export default function ContactSection() {
                 <Paper 
                   elevation={0}
                   component="form"
-                  action={`https://spreeform.com/to/${spreeFormId}`}
-                  method="POST"
-                  target="_blank"
                   onSubmit={handleSubmit}
                   sx={{ 
                     background: 'rgba(18, 18, 18, 0.5)',
@@ -468,9 +451,6 @@ export default function ContactSection() {
                     border: '1px solid rgba(255, 255, 255, 0.05)'
                   }}
                 >
-                  {/* Hidden field for recipient email */}
-                  <input type="hidden" name="_to" value={contactInfo.email} />
-                  
                   <Typography 
                     variant="h5" 
                     component="h3" 
